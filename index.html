@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>21 Tara Recitation Counter</title>
     
-   <!-- Custom Icon -->
-<link rel="icon" href="https://raw.githubusercontent.com/cmekelburgdfsupply/tara/7b7b71ab89159c7e769ff3c530eb773b4b927e2f/tara_icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/cmekelburgdfsupply/tara/7b7b71ab89159c7e769ff3c530eb773b4b927e2f/tara_icon.png">
-<meta name="theme-color" content="#059669">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Tara Counter">
+    <!-- Custom Icon -->
+    <link rel="icon" href="https://raw.githubusercontent.com/cmekelburgdfsupply/tara/7b7b71ab89159c7e769ff3c530eb773b4b927e2f/tara_icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/cmekelburgdfsupply/tara/7b7b71ab89159c7e769ff3c530eb773b4b927e2f/tara_icon.png">
+    <meta name="theme-color" content="#059669">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tara Counter">
+    
     <style>
         * {
             margin: 0;
@@ -37,7 +38,7 @@
         }
 
         .header h1 {
-            color: white;
+            color: #ffffff;
             font-size: 2rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
@@ -48,7 +49,7 @@
         }
 
         .header p {
-            color:#ffffff;
+            color: #ffffff;
         }
 
         .card {
@@ -66,21 +67,21 @@
         }
 
         .count-title {
-            color:#ffffff;
+            color: #ffffff;
             font-size: 1.125rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
         .count-number {
-            color: white;
+            color: #ffffff;
             font-size: 3rem;
             font-weight: bold;
             margin-bottom: 1rem;
         }
 
         .count-subtitle {
-            color:#ffffff;
+            color: #ffffff;
             font-size: 0.875rem;
         }
 
@@ -97,7 +98,7 @@
         }
 
         .input-label {
-            color:#ffffff;
+            color: #ffffff;
             font-size: 0.875rem;
             font-weight: 500;
             margin-bottom: 0.75rem;
@@ -121,21 +122,21 @@
             cursor: pointer;
             transition: all 0.2s;
             background: transparent;
-            color:#ffffff;
+            color: #ffffff;
         }
 
         .toggle-btn.active {
-            background: #8b5cf6;
-            color: white;
+            background: #10b981;
+            color: #ffffff;
         }
 
         .toggle-btn:hover:not(.active) {
-            color: white;
+            color: #ffffff;
         }
 
         .preset-select, .custom-input {
             background: rgba(255, 255, 255, 0.2);
-            color: white;
+            color: #ffffff;
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 0.5rem;
             padding: 0.5rem 1rem;
@@ -145,8 +146,8 @@
         }
 
         .preset-select:focus, .custom-input:focus {
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
+            border-color: #10b981;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
         }
 
         .custom-input {
@@ -160,8 +161,8 @@
 
         .add-btn {
             width: 100%;
-            background: linear-gradient(135deg, #ec4899, #8b5cf6);
-            color: white;
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: #ffffff;
             font-weight: 600;
             padding: 1rem 1.5rem;
             border: none;
@@ -178,7 +179,7 @@
         }
 
         .add-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, #db2777, #7c3aed);
+            background: linear-gradient(135deg, #047857, #059669);
             transform: scale(1.02);
         }
 
@@ -192,15 +193,16 @@
             transform: none;
         }
 
-        .reset-buttons {
+        .button-row {
             display: flex;
             gap: 0.75rem;
+            margin-bottom: 0.75rem;
         }
 
         .reset-btn {
             flex: 1;
             background: rgba(255, 255, 255, 0.1);
-            color:#ffffff;
+            color: #ffffff;
             font-weight: 500;
             padding: 0.75rem 1rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -211,17 +213,18 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            font-size: 0.875rem;
         }
 
         .reset-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-            color: white;
+            color: #ffffff;
         }
 
         .blessing {
             text-align: center;
             margin-top: 2rem;
-            color: white;
+            color: #ffffff;
             font-style: italic;
             font-size: 0.875rem;
         }
@@ -239,6 +242,84 @@
         option {
             color: #374151;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 400px;
+            max-height: 80%;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #064e3b, #059669, #047857);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .history-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-current {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .history-past {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .history-empty {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 2rem 1rem;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -246,7 +327,7 @@
         <div class="header">
             <h1>
                 <span class="heart">♥</span>
-                21 Taras Counter
+                21 Tara Counter
                 <span class="heart">♥</span>
             </h1>
             <p>Track your daily recitations</p>
@@ -257,7 +338,7 @@
             <div class="count-display">
                 <h2 class="count-title">Total Recitations</h2>
                 <div class="count-number" id="totalCount">0</div>
-                <div class="count-subtitle">Complete 21 Taras prayers recited</div>
+                <div class="count-subtitle">Complete 21 Tara prayers recited</div>
             </div>
         </div>
 
@@ -308,20 +389,40 @@
                 <span id="addBtnText">Add 3 Prayers</span>
             </button>
 
-            <div class="reset-buttons">
+            <div class="button-row">
+                <button class="reset-btn" id="historyBtn">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3Z"/>
+                    </svg>
+                    History
+                </button>
+                
                 <button class="reset-btn" id="resetMonthlyBtn">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
                     </svg>
                     Reset Monthly
                 </button>
-                
+            </div>
+
+            <div class="button-row">
                 <button class="reset-btn" id="resetAllBtn">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
                     </svg>
                     Reset All
                 </button>
+            </div>
+        </div>
+
+        <!-- History Modal -->
+        <div class="modal" id="historyModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Monthly History</h2>
+                    <button class="close-btn" id="closeHistoryBtn">&times;</button>
+                </div>
+                <div id="historyContent"></div>
             </div>
         </div>
 
@@ -336,21 +437,12 @@
         let monthlyCount = 0;
         let currentMonth = '';
         let useCustom = false;
+        let monthlyHistory = {};
 
-        // DOM elements
-        const totalCountEl = document.getElementById('totalCount');
-        const monthlyCountEl = document.getElementById('monthlyCount');
-        const currentMonthEl = document.getElementById('currentMonth');
-        const presetBtn = document.getElementById('presetBtn');
-        const customBtn = document.getElementById('customBtn');
-        const presetSection = document.getElementById('presetSection');
-        const customSection = document.getElementById('customSection');
-        const presetSelect = document.getElementById('presetSelect');
-        const customInput = document.getElementById('customInput');
-        const addBtn = document.getElementById('addBtn');
-        const addBtnText = document.getElementById('addBtnText');
-        const resetMonthlyBtn = document.getElementById('resetMonthlyBtn');
-        const resetAllBtn = document.getElementById('resetAllBtn');
+        // Get current month/year string
+        function getCurrentMonthYear() {
+            return new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        }
 
         // Load data from localStorage
         function loadData() {
@@ -358,10 +450,15 @@
             totalCount = data.totalCount || 0;
             monthlyCount = data.monthlyCount || 0;
             currentMonth = data.currentMonth || getCurrentMonthYear();
+            monthlyHistory = data.monthlyHistory || {};
             
             // Check if month has changed
             const nowMonth = getCurrentMonthYear();
             if (currentMonth !== nowMonth) {
+                // Save current month's count to history before switching
+                if (currentMonth && monthlyCount > 0) {
+                    monthlyHistory[currentMonth] = monthlyCount;
+                }
                 currentMonth = nowMonth;
                 monthlyCount = 0;
                 saveData();
@@ -375,36 +472,38 @@
             const data = {
                 totalCount,
                 monthlyCount,
-                currentMonth
+                currentMonth,
+                monthlyHistory
             };
             localStorage.setItem('taraCounter', JSON.stringify(data));
         }
 
-        // Get current month/year string
-        function getCurrentMonthYear() {
-            return new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-        }
-
         // Update display
         function updateDisplay() {
-            totalCountEl.textContent = totalCount.toLocaleString();
-            monthlyCountEl.textContent = monthlyCount.toLocaleString();
-            currentMonthEl.textContent = currentMonth;
+            document.getElementById('totalCount').textContent = totalCount.toLocaleString();
+            document.getElementById('monthlyCount').textContent = monthlyCount.toLocaleString();
+            document.getElementById('currentMonth').textContent = currentMonth;
             updateAddButton();
         }
 
         // Update add button text and state
         function updateAddButton() {
-            const amount = useCustom ? (parseInt(customInput.value) || 0) : parseInt(presetSelect.value);
+            const amount = useCustom ? (parseInt(document.getElementById('customInput').value) || 0) : parseInt(document.getElementById('presetSelect').value);
             const isValid = amount > 0;
             
-            addBtnText.textContent = `Add ${amount} Prayer${amount !== 1 ? 's' : ''}`;
-            addBtn.disabled = !isValid;
+            document.getElementById('addBtnText').textContent = `Add ${amount} Prayer${amount !== 1 ? 's' : ''}`;
+            document.getElementById('addBtn').disabled = !isValid;
         }
 
         // Toggle between preset and custom
         function toggleMode(custom) {
             useCustom = custom;
+            
+            const presetBtn = document.getElementById('presetBtn');
+            const customBtn = document.getElementById('customBtn');
+            const presetSection = document.getElementById('presetSection');
+            const customSection = document.getElementById('customSection');
+            const customInput = document.getElementById('customInput');
             
             if (custom) {
                 presetBtn.classList.remove('active');
@@ -424,13 +523,19 @@
 
         // Add recitations
         function addRecitations() {
-            const amount = useCustom ? (parseInt(customInput.value) || 0) : parseInt(presetSelect.value);
+            const amount = useCustom ? 
+                (parseInt(document.getElementById('customInput').value) || 0) : 
+                parseInt(document.getElementById('presetSelect').value);
             
             if (amount <= 0) return;
             
             // Check if month changed
             const nowMonth = getCurrentMonthYear();
             if (currentMonth !== nowMonth) {
+                // Save current month to history
+                if (currentMonth && monthlyCount > 0) {
+                    monthlyHistory[currentMonth] = monthlyCount;
+                }
                 currentMonth = nowMonth;
                 monthlyCount = amount;
             } else {
@@ -441,7 +546,7 @@
             
             // Clear custom input
             if (useCustom) {
-                customInput.value = '';
+                document.getElementById('customInput').value = '';
             }
             
             saveData();
@@ -458,25 +563,74 @@
         }
 
         function resetAll() {
-            if (confirm('Reset all counts? This cannot be undone.')) {
+            if (confirm('Reset all counts and history? This cannot be undone.')) {
                 totalCount = 0;
                 monthlyCount = 0;
+                monthlyHistory = {};
                 saveData();
                 updateDisplay();
             }
         }
 
-        // Event listeners
-        presetBtn.addEventListener('click', () => toggleMode(false));
-        customBtn.addEventListener('click', () => toggleMode(true));
-        presetSelect.addEventListener('change', updateAddButton);
-        customInput.addEventListener('input', updateAddButton);
-        addBtn.addEventListener('click', addRecitations);
-        resetMonthlyBtn.addEventListener('click', resetMonthly);
-        resetAllBtn.addEventListener('click', resetAll);
+        // Show history modal
+        function showHistory() {
+            let historyHTML = '';
+            
+            // Add current month first if it has prayers
+            if (monthlyCount > 0) {
+                historyHTML += `<div class="history-item history-current">
+                    <span>${currentMonth} (Current)</span>
+                    <span>${monthlyCount.toLocaleString()}</span>
+                </div>`;
+            }
+            
+            // Add previous months in reverse chronological order
+            const sortedMonths = Object.keys(monthlyHistory)
+                .filter(month => monthlyHistory[month] > 0)
+                .sort((a, b) => new Date(b + ' 1') - new Date(a + ' 1'));
+            
+            sortedMonths.forEach(month => {
+                historyHTML += `<div class="history-item history-past">
+                    <span>${month}</span>
+                    <span>${monthlyHistory[month].toLocaleString()}</span>
+                </div>`;
+            });
+            
+            if (!historyHTML) {
+                historyHTML = '<div class="history-empty">No history yet.<br>Start practicing to build your record!</div>';
+            }
+            
+            document.getElementById('historyContent').innerHTML = historyHTML;
+            document.getElementById('historyModal').style.display = 'block';
+        }
 
-        // Initialize
-        loadData();
+        function hideHistory() {
+            document.getElementById('historyModal').style.display = 'none';
+        }
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Event listeners
+            document.getElementById('presetBtn').addEventListener('click', () => toggleMode(false));
+            document.getElementById('customBtn').addEventListener('click', () => toggleMode(true));
+            document.getElementById('presetSelect').addEventListener('change', updateAddButton);
+            document.getElementById('customInput').addEventListener('input', updateAddButton);
+            document.getElementById('addBtn').addEventListener('click', addRecitations);
+            document.getElementById('resetMonthlyBtn').addEventListener('click', resetMonthly);
+            document.getElementById('resetAllBtn').addEventListener('click', resetAll);
+            document.getElementById('historyBtn').addEventListener('click', showHistory);
+            document.getElementById('closeHistoryBtn').addEventListener('click', hideHistory);
+            
+            // Close modal when clicking outside
+            document.getElementById('historyModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('historyModal')) {
+                    hideHistory();
+                }
+            });
+
+            // Load initial data
+            loadData();
+        });
     </script>
 </body>
 </html>
