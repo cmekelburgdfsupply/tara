@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>21 Tara Recitation Counter</title>
     
-    <!-- Custom Icon -->
     <link rel="icon" href="https://raw.githubusercontent.com/cmekelburgdfsupply/tara/7b7b71ab89159c7e769ff3c530eb773b4b927e2f/tara_icon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/cmekelburgdfsupply/tara/7b7b71ab89159c7e769ff3c530eb773b4b927e2f/tara_icon.png">
     <meta name="theme-color" content="#059669">
@@ -134,7 +133,7 @@
             color: #ffffff;
         }
 
-        .preset-select, .custom-input {
+        .preset-select, .custom-input, .date-input {
             background: rgba(255, 255, 255, 0.2);
             color: #ffffff;
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -145,7 +144,7 @@
             transition: all 0.2s;
         }
 
-        .preset-select:focus, .custom-input:focus {
+        .preset-select:focus, .custom-input:focus, .date-input:focus {
             border-color: #10b981;
             box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
         }
@@ -153,6 +152,12 @@
         .custom-input {
             width: 120px;
             text-align: center;
+        }
+
+        .date-input {
+            width: 100%;
+            margin-top: 0.75rem;
+            color-scheme: dark;
         }
 
         .custom-input::placeholder {
@@ -243,6 +248,7 @@
             color: #374151;
         }
 
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -260,8 +266,8 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 90%;
-            max-width: 400px;
-            max-height: 80%;
+            max-width: 450px;
+            max-height: 85%;
             overflow-y: auto;
             background: linear-gradient(135deg, #064e3b, #059669, #047857);
             border-radius: 1rem;
@@ -297,21 +303,69 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        .history-item {
-            padding: 0.75rem;
+        /* History Styles */
+        .month-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .month-title {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 0.5rem;
-            border-radius: 0.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .history-current {
+        .month-total {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .day-entry {
+            padding: 0.6rem 0.75rem;
+            margin-bottom: 0.35rem;
+            border-radius: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .day-entry:hover {
             background: rgba(255, 255, 255, 0.15);
         }
 
-        .history-past {
-            background: rgba(255, 255, 255, 0.05);
+        .day-entry.today {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .day-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+
+        .day-date {
+            color: #ffffff;
+            font-size: 0.9rem;
+        }
+
+        .day-weekday {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.75rem;
+        }
+
+        .day-count {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1rem;
         }
 
         .history-empty {
@@ -319,6 +373,192 @@
             color: rgba(255, 255, 255, 0.7);
             padding: 2rem 1rem;
             font-style: italic;
+        }
+
+        /* Edit Modal */
+        .edit-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .edit-label {
+            color: #ffffff;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .edit-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .edit-input:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+        }
+
+        .edit-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .edit-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .edit-btn.save {
+            background: #10b981;
+            color: white;
+        }
+
+        .edit-btn.save:hover {
+            background: #059669;
+        }
+
+        .edit-btn.delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .edit-btn.delete:hover {
+            background: #dc2626;
+        }
+
+        .edit-btn.cancel {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .edit-btn.cancel:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .edit-date-display {
+            color: #ffffff;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Add Past Entry section */
+        .add-past-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .add-past-title {
+            color: #ffffff;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .add-past-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .add-past-fields {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-past-field {
+            flex: 1;
+        }
+
+        .add-past-field label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.75rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .add-past-field input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            outline: none;
+            color-scheme: dark;
+        }
+
+        .add-past-field input:focus {
+            border-color: #10b981;
+        }
+
+        .add-past-btn {
+            width: 100%;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .add-past-btn:hover {
+            background: #059669;
+        }
+
+        .add-past-btn:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+        }
+
+        /* View toggle in history */
+        .view-toggle {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 0.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .view-toggle-btn {
+            flex: 1;
+            padding: 0.4rem 0.75rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+        }
+
+        .view-toggle-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
         }
     </style>
 </head>
@@ -368,9 +608,9 @@
 
                 <div id="presetSection">
                     <select class="preset-select" id="presetSelect">
-                        <option value="3" selected>3 prayers</option>
-                        <option value="5">5 prayers</option>
+                        <option value="7" selected>7 prayers</option>
                         <option value="10">10 prayers</option>
+                        <option value="14">14 prayers</option>
                     </select>
                 </div>
 
@@ -386,7 +626,7 @@
                 <svg class="icon" viewBox="0 0 24 24">
                     <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
                 </svg>
-                <span id="addBtnText">Add 3 Prayers</span>
+                <span id="addBtnText">Add 7 Prayers</span>
             </button>
 
             <div class="button-row">
@@ -419,10 +659,64 @@
         <div class="modal" id="historyModal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title">Monthly History</h2>
+                    <h2 class="modal-title">History</h2>
                     <button class="close-btn" id="closeHistoryBtn">&times;</button>
                 </div>
+                
+                <div class="view-toggle">
+                    <button class="view-toggle-btn active" id="viewDailyBtn">Daily</button>
+                    <button class="view-toggle-btn" id="viewMonthlyBtn">Monthly</button>
+                </div>
+                
                 <div id="historyContent"></div>
+                
+                <!-- Add Past Entry Section -->
+                <div class="add-past-section">
+                    <div class="add-past-title">
+                        <svg class="icon" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                        </svg>
+                        Add Past Entry
+                    </div>
+                    <div class="add-past-row">
+                        <div class="add-past-fields">
+                            <div class="add-past-field">
+                                <label>Date</label>
+                                <input type="date" id="pastDate">
+                            </div>
+                            <div class="add-past-field" style="flex: 0.6;">
+                                <label>Prayers</label>
+                                <input type="number" id="pastCount" min="1" placeholder="#">
+                            </div>
+                        </div>
+                        <button class="add-past-btn" id="addPastBtn">Add Entry</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Entry Modal -->
+        <div class="modal" id="editModal">
+            <div class="modal-content" style="max-width: 350px;">
+                <div class="modal-header">
+                    <h2 class="modal-title">Edit Entry</h2>
+                    <button class="close-btn" id="closeEditBtn">&times;</button>
+                </div>
+                
+                <div class="edit-form">
+                    <div class="edit-date-display" id="editDateDisplay"></div>
+                    
+                    <div>
+                        <label class="edit-label">Number of prayers</label>
+                        <input type="number" class="edit-input" id="editCount" min="0">
+                    </div>
+                    
+                    <div class="edit-buttons">
+                        <button class="edit-btn cancel" id="editCancelBtn">Cancel</button>
+                        <button class="edit-btn delete" id="editDeleteBtn">Delete</button>
+                        <button class="edit-btn save" id="editSaveBtn">Save</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -432,70 +726,111 @@
     </div>
 
     <script>
-        // Initialize variables
-        let totalCount = 0;
-        let monthlyCount = 0;
-        let currentMonth = '';
+        // Data structure: { entries: { "YYYY-MM-DD": count, ... } }
+        let data = { entries: {} };
         let useCustom = false;
-        let monthlyHistory = {};
+        let currentEditDate = null;
+        let historyView = 'daily'; // 'daily' or 'monthly'
 
-        // Get current month/year string
+        // Helper functions
+        function getTodayString() {
+            return new Date().toISOString().split('T')[0];
+        }
+
         function getCurrentMonthYear() {
             return new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
         }
 
-        // Load data from localStorage
-        function loadData() {
-            const data = JSON.parse(localStorage.getItem('taraCounter') || '{}');
-            totalCount = data.totalCount || 0;
-            monthlyCount = data.monthlyCount || 0;
-            currentMonth = data.currentMonth || getCurrentMonthYear();
-            monthlyHistory = data.monthlyHistory || {};
-            
-            // Check if month has changed
-            const nowMonth = getCurrentMonthYear();
-            if (currentMonth !== nowMonth) {
-                // Save current month's count to history before switching
-                if (currentMonth && monthlyCount > 0) {
-                    monthlyHistory[currentMonth] = monthlyCount;
+        function getMonthYearFromDate(dateStr) {
+            const date = new Date(dateStr + 'T12:00:00');
+            return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        }
+
+        function formatDateDisplay(dateStr) {
+            const date = new Date(dateStr + 'T12:00:00');
+            return date.toLocaleDateString('en-US', { 
+                weekday: 'long',
+                month: 'long', 
+                day: 'numeric',
+                year: 'numeric'
+            });
+        }
+
+        function formatShortDate(dateStr) {
+            const date = new Date(dateStr + 'T12:00:00');
+            return date.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric'
+            });
+        }
+
+        function getWeekday(dateStr) {
+            const date = new Date(dateStr + 'T12:00:00');
+            return date.toLocaleDateString('en-US', { weekday: 'short' });
+        }
+
+        // Calculate totals
+        function getTotalCount() {
+            return Object.values(data.entries).reduce((sum, count) => sum + count, 0);
+        }
+
+        function getMonthlyCount(monthYear) {
+            let total = 0;
+            for (const [dateStr, count] of Object.entries(data.entries)) {
+                if (getMonthYearFromDate(dateStr) === monthYear) {
+                    total += count;
                 }
-                currentMonth = nowMonth;
-                monthlyCount = 0;
-                saveData();
             }
-            
+            return total;
+        }
+
+        function getCurrentMonthCount() {
+            return getMonthlyCount(getCurrentMonthYear());
+        }
+
+        // Load/Save data
+        function loadData() {
+            const stored = localStorage.getItem('taraCounterV2');
+            if (stored) {
+                data = JSON.parse(stored);
+            } else {
+                // Migrate from old format if exists
+                const oldData = localStorage.getItem('taraCounter');
+                if (oldData) {
+                    const old = JSON.parse(oldData);
+                    data = { entries: {} };
+                    // Put old total as today's count (rough migration)
+                    if (old.totalCount > 0) {
+                        data.entries[getTodayString()] = old.totalCount;
+                    }
+                }
+            }
             updateDisplay();
         }
 
-        // Save data to localStorage
         function saveData() {
-            const data = {
-                totalCount,
-                monthlyCount,
-                currentMonth,
-                monthlyHistory
-            };
-            localStorage.setItem('taraCounter', JSON.stringify(data));
+            localStorage.setItem('taraCounterV2', JSON.stringify(data));
         }
 
         // Update display
         function updateDisplay() {
-            document.getElementById('totalCount').textContent = totalCount.toLocaleString();
-            document.getElementById('monthlyCount').textContent = monthlyCount.toLocaleString();
-            document.getElementById('currentMonth').textContent = currentMonth;
+            document.getElementById('totalCount').textContent = getTotalCount().toLocaleString();
+            document.getElementById('monthlyCount').textContent = getCurrentMonthCount().toLocaleString();
+            document.getElementById('currentMonth').textContent = getCurrentMonthYear();
             updateAddButton();
         }
 
-        // Update add button text and state
         function updateAddButton() {
-            const amount = useCustom ? (parseInt(document.getElementById('customInput').value) || 0) : parseInt(document.getElementById('presetSelect').value);
+            const amount = useCustom ? 
+                (parseInt(document.getElementById('customInput').value) || 0) : 
+                parseInt(document.getElementById('presetSelect').value);
             const isValid = amount > 0;
             
             document.getElementById('addBtnText').textContent = `Add ${amount} Prayer${amount !== 1 ? 's' : ''}`;
             document.getElementById('addBtn').disabled = !isValid;
         }
 
-        // Toggle between preset and custom
+        // Toggle preset/custom mode
         function toggleMode(custom) {
             useCustom = custom;
             
@@ -503,14 +838,13 @@
             const customBtn = document.getElementById('customBtn');
             const presetSection = document.getElementById('presetSection');
             const customSection = document.getElementById('customSection');
-            const customInput = document.getElementById('customInput');
             
             if (custom) {
                 presetBtn.classList.remove('active');
                 customBtn.classList.add('active');
                 presetSection.style.display = 'none';
                 customSection.style.display = 'block';
-                customInput.focus();
+                document.getElementById('customInput').focus();
             } else {
                 customBtn.classList.remove('active');
                 presetBtn.classList.add('active');
@@ -529,22 +863,9 @@
             
             if (amount <= 0) return;
             
-            // Check if month changed
-            const nowMonth = getCurrentMonthYear();
-            if (currentMonth !== nowMonth) {
-                // Save current month to history
-                if (currentMonth && monthlyCount > 0) {
-                    monthlyHistory[currentMonth] = monthlyCount;
-                }
-                currentMonth = nowMonth;
-                monthlyCount = amount;
-            } else {
-                monthlyCount += amount;
-            }
+            const today = getTodayString();
+            data.entries[today] = (data.entries[today] || 0) + amount;
             
-            totalCount += amount;
-            
-            // Clear custom input
             if (useCustom) {
                 document.getElementById('customInput').value = '';
             }
@@ -553,64 +874,218 @@
             updateDisplay();
         }
 
+        // Add past entry
+        function addPastEntry() {
+            const dateStr = document.getElementById('pastDate').value;
+            const count = parseInt(document.getElementById('pastCount').value);
+            
+            if (!dateStr || !count || count <= 0) return;
+            
+            data.entries[dateStr] = (data.entries[dateStr] || 0) + count;
+            
+            document.getElementById('pastDate').value = '';
+            document.getElementById('pastCount').value = '';
+            
+            saveData();
+            updateDisplay();
+            renderHistory();
+        }
+
         // Reset functions
         function resetMonthly() {
-            if (confirm('Reset monthly count?')) {
-                monthlyCount = 0;
+            const currentMonth = getCurrentMonthYear();
+            const toDelete = [];
+            
+            for (const dateStr of Object.keys(data.entries)) {
+                if (getMonthYearFromDate(dateStr) === currentMonth) {
+                    toDelete.push(dateStr);
+                }
+            }
+            
+            if (toDelete.length === 0) return;
+            
+            if (confirm(`Reset ${toDelete.length} entries for ${currentMonth}?`)) {
+                toDelete.forEach(d => delete data.entries[d]);
                 saveData();
                 updateDisplay();
             }
         }
 
         function resetAll() {
-            if (confirm('Reset all counts and history? This cannot be undone.')) {
-                totalCount = 0;
-                monthlyCount = 0;
-                monthlyHistory = {};
+            if (confirm('Reset ALL counts and history? This cannot be undone.')) {
+                data = { entries: {} };
                 saveData();
                 updateDisplay();
             }
         }
 
-        // Show history modal
+        // History modal
         function showHistory() {
-            let historyHTML = '';
-            
-            // Add current month first if it has prayers
-            if (monthlyCount > 0) {
-                historyHTML += `<div class="history-item history-current">
-                    <span>${currentMonth} (Current)</span>
-                    <span>${monthlyCount.toLocaleString()}</span>
-                </div>`;
-            }
-            
-            // Add previous months in reverse chronological order
-            const sortedMonths = Object.keys(monthlyHistory)
-                .filter(month => monthlyHistory[month] > 0)
-                .sort((a, b) => new Date(b + ' 1') - new Date(a + ' 1'));
-            
-            sortedMonths.forEach(month => {
-                historyHTML += `<div class="history-item history-past">
-                    <span>${month}</span>
-                    <span>${monthlyHistory[month].toLocaleString()}</span>
-                </div>`;
-            });
-            
-            if (!historyHTML) {
-                historyHTML = '<div class="history-empty">No history yet.<br>Start practicing to build your record!</div>';
-            }
-            
-            document.getElementById('historyContent').innerHTML = historyHTML;
+            renderHistory();
             document.getElementById('historyModal').style.display = 'block';
+            
+            // Set max date to today for past entry picker
+            document.getElementById('pastDate').max = getTodayString();
         }
 
         function hideHistory() {
             document.getElementById('historyModal').style.display = 'none';
         }
 
-        // Initialize app when page loads
+        function setHistoryView(view) {
+            historyView = view;
+            document.getElementById('viewDailyBtn').classList.toggle('active', view === 'daily');
+            document.getElementById('viewMonthlyBtn').classList.toggle('active', view === 'monthly');
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('historyContent');
+            const entries = Object.entries(data.entries).filter(([_, count]) => count > 0);
+            
+            if (entries.length === 0) {
+                container.innerHTML = '<div class="history-empty">No history yet.<br>Start practicing to build your record!</div>';
+                return;
+            }
+            
+            // Sort by date descending
+            entries.sort((a, b) => b[0].localeCompare(a[0]));
+            
+            if (historyView === 'monthly') {
+                renderMonthlyHistory(container, entries);
+            } else {
+                renderDailyHistory(container, entries);
+            }
+        }
+
+        function renderMonthlyHistory(container, entries) {
+            // Group by month
+            const months = {};
+            entries.forEach(([dateStr, count]) => {
+                const monthYear = getMonthYearFromDate(dateStr);
+                months[monthYear] = (months[monthYear] || 0) + count;
+            });
+            
+            // Sort months
+            const sortedMonths = Object.entries(months).sort((a, b) => {
+                const dateA = new Date(a[0] + ' 1');
+                const dateB = new Date(b[0] + ' 1');
+                return dateB - dateA;
+            });
+            
+            let html = '';
+            const currentMonth = getCurrentMonthYear();
+            
+            sortedMonths.forEach(([monthYear, total]) => {
+                const isCurrent = monthYear === currentMonth;
+                html += `
+                    <div class="day-entry ${isCurrent ? 'today' : ''}" style="cursor: default;">
+                        <span class="day-date">${monthYear}${isCurrent ? ' (Current)' : ''}</span>
+                        <span class="day-count">${total.toLocaleString()}</span>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function renderDailyHistory(container, entries) {
+            // Group by month
+            const byMonth = {};
+            entries.forEach(([dateStr, count]) => {
+                const monthYear = getMonthYearFromDate(dateStr);
+                if (!byMonth[monthYear]) byMonth[monthYear] = [];
+                byMonth[monthYear].push([dateStr, count]);
+            });
+            
+            // Sort months
+            const sortedMonths = Object.keys(byMonth).sort((a, b) => {
+                const dateA = new Date(a + ' 1');
+                const dateB = new Date(b + ' 1');
+                return dateB - dateA;
+            });
+            
+            const today = getTodayString();
+            const currentMonth = getCurrentMonthYear();
+            let html = '';
+            
+            sortedMonths.forEach(monthYear => {
+                const monthEntries = byMonth[monthYear];
+                const monthTotal = monthEntries.reduce((sum, [_, count]) => sum + count, 0);
+                const isCurrent = monthYear === currentMonth;
+                
+                html += `
+                    <div class="month-section">
+                        <div class="month-title">
+                            <span>${monthYear}${isCurrent ? ' (Current)' : ''}</span>
+                            <span class="month-total">${monthTotal.toLocaleString()} total</span>
+                        </div>
+                `;
+                
+                monthEntries.forEach(([dateStr, count]) => {
+                    const isToday = dateStr === today;
+                    html += `
+                        <div class="day-entry ${isToday ? 'today' : ''}" onclick="openEditModal('${dateStr}')">
+                            <div class="day-info">
+                                <span class="day-date">${formatShortDate(dateStr)}${isToday ? ' (Today)' : ''}</span>
+                                <span class="day-weekday">${getWeekday(dateStr)}</span>
+                            </div>
+                            <span class="day-count">${count.toLocaleString()}</span>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Edit modal
+        function openEditModal(dateStr) {
+            currentEditDate = dateStr;
+            document.getElementById('editDateDisplay').textContent = formatDateDisplay(dateStr);
+            document.getElementById('editCount').value = data.entries[dateStr] || 0;
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+            currentEditDate = null;
+        }
+
+        function saveEdit() {
+            if (!currentEditDate) return;
+            
+            const newCount = parseInt(document.getElementById('editCount').value);
+            
+            if (newCount <= 0) {
+                delete data.entries[currentEditDate];
+            } else {
+                data.entries[currentEditDate] = newCount;
+            }
+            
+            saveData();
+            updateDisplay();
+            renderHistory();
+            closeEditModal();
+        }
+
+        function deleteEntry() {
+            if (!currentEditDate) return;
+            
+            if (confirm('Delete this entry?')) {
+                delete data.entries[currentEditDate];
+                saveData();
+                updateDisplay();
+                renderHistory();
+                closeEditModal();
+            }
+        }
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Event listeners
+            // Main buttons
             document.getElementById('presetBtn').addEventListener('click', () => toggleMode(false));
             document.getElementById('customBtn').addEventListener('click', () => toggleMode(true));
             document.getElementById('presetSelect').addEventListener('change', updateAddButton);
@@ -618,17 +1093,31 @@
             document.getElementById('addBtn').addEventListener('click', addRecitations);
             document.getElementById('resetMonthlyBtn').addEventListener('click', resetMonthly);
             document.getElementById('resetAllBtn').addEventListener('click', resetAll);
+            
+            // History modal
             document.getElementById('historyBtn').addEventListener('click', showHistory);
             document.getElementById('closeHistoryBtn').addEventListener('click', hideHistory);
-            
-            // Close modal when clicking outside
             document.getElementById('historyModal').addEventListener('click', (e) => {
-                if (e.target === document.getElementById('historyModal')) {
-                    hideHistory();
-                }
+                if (e.target === document.getElementById('historyModal')) hideHistory();
             });
-
-            // Load initial data
+            
+            // History view toggle
+            document.getElementById('viewDailyBtn').addEventListener('click', () => setHistoryView('daily'));
+            document.getElementById('viewMonthlyBtn').addEventListener('click', () => setHistoryView('monthly'));
+            
+            // Add past entry
+            document.getElementById('addPastBtn').addEventListener('click', addPastEntry);
+            
+            // Edit modal
+            document.getElementById('closeEditBtn').addEventListener('click', closeEditModal);
+            document.getElementById('editCancelBtn').addEventListener('click', closeEditModal);
+            document.getElementById('editSaveBtn').addEventListener('click', saveEdit);
+            document.getElementById('editDeleteBtn').addEventListener('click', deleteEntry);
+            document.getElementById('editModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('editModal')) closeEditModal();
+            });
+            
+            // Load data
             loadData();
         });
     </script>
