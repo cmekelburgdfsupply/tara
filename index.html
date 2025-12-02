@@ -484,11 +484,12 @@
 
         .add-past-fields {
             display: flex;
-            gap: 0.5rem;
+            flex-direction: column;
+            gap: 0.75rem;
         }
 
         .add-past-field {
-            flex: 1;
+            width: 100%;
         }
 
         .add-past-field label {
@@ -504,8 +505,8 @@
             color: #ffffff;
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 0.5rem;
-            padding: 0.5rem;
-            font-size: 0.9rem;
+            padding: 0.75rem;
+            font-size: 1rem;
             outline: none;
             color-scheme: dark;
         }
@@ -684,9 +685,9 @@
                                 <label>Date</label>
                                 <input type="date" id="pastDate">
                             </div>
-                            <div class="add-past-field" style="flex: 0.6;">
+                            <div class="add-past-field">
                                 <label>Prayers</label>
-                                <input type="number" id="pastCount" min="1" placeholder="#">
+                                <input type="number" id="pastCount" min="1" placeholder="Enter count">
                             </div>
                         </div>
                         <button class="add-past-btn" id="addPastBtn">Add Entry</button>
